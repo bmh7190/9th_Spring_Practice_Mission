@@ -21,5 +21,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     """)
     Optional<Member> findWithFoodsById(@Param("id") Long id);
 
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Query("delete from Member m where m.id = :id")
+    int hardDeleteById(@Param("id") Long id);
 
 }

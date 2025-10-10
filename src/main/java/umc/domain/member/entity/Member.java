@@ -4,12 +4,16 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import umc.domain.member.entity.mapping.MemberFood;
 import umc.domain.mission.entity.MemberMission;
 import umc.global.entity.BaseEntity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -60,5 +64,13 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberMission> missions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<MemberFood> foods = new HashSet<>();
+
+    public void softDelete() {
+        this.memberStatus = MemberStatus.WITHDRAWN;
+        this.setDeletedAt(LocalDateTime.now());
+    }
 
 }
