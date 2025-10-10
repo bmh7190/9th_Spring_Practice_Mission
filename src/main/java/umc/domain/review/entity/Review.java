@@ -8,6 +8,7 @@ import umc.domain.member.entity.Member;
 import umc.domain.store.entity.Store;
 import umc.global.entity.BaseEntity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class Review extends BaseEntity {
     private String content;
 
     @Column(name = "star", nullable = false, precision = 2, scale = 1)
-    private Float star;
+    private BigDecimal star;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "member_id", nullable = false)
