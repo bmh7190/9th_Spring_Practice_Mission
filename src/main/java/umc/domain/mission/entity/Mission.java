@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.repository.Lock;
 import umc.domain.store.entity.Store;
 import umc.global.entity.BaseEntity;
 
