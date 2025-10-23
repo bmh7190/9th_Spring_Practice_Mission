@@ -34,7 +34,7 @@ public class MemberService {
         }
     }
 
-    public void hardDeleteMember(Long memberId) {
+    private void hardDeleteMember(Long memberId) {
 
 
         int deletedPhotos = reviewPhotoRepository.deleteAllByMemberId(memberId);
@@ -55,7 +55,7 @@ public class MemberService {
         }
     }
 
-    public void softDeleteMember(Long memberId) {
+    private void softDeleteMember(Long memberId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다."));
 

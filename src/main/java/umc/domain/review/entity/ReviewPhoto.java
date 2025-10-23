@@ -2,8 +2,11 @@ package umc.domain.review.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import org.antlr.v4.runtime.misc.NotNull;
 import umc.global.entity.BaseEntity;
 
 @Entity
@@ -21,5 +24,9 @@ public class ReviewPhoto extends BaseEntity {
     @JoinColumn(name = "review_id", nullable = false)
     private Review review;
 
-
+    @Builder
+    public ReviewPhoto( @NonNull Review review, @NonNull String photoUrl) {
+        this.review = review;
+        this.photoUrl = photoUrl;
+    }
 }

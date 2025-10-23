@@ -2,8 +2,10 @@ package umc.domain.store.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import umc.global.entity.BaseEntity;
 
 @Entity
@@ -21,5 +23,11 @@ public class StoreImage extends BaseEntity {
 
     @Column(name = "image_url", nullable = false, length = 500)
     private String imageUrl;
+
+    @Builder
+    public StoreImage( @NonNull String imageUrl, @NonNull Store store) {
+        this.imageUrl = imageUrl;
+        this.store = store;
+    }
 
 }

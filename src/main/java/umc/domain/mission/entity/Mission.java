@@ -2,8 +2,10 @@ package umc.domain.mission.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.data.jpa.repository.Lock;
 import umc.domain.store.entity.Store;
 import umc.global.entity.BaseEntity;
@@ -30,4 +32,17 @@ public class Mission extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
+
+    @Builder
+    public Mission(
+            @NonNull LocalDateTime deadlineAt,
+            @NonNull String content,
+            @NonNull Integer point,
+            @NonNull Store store
+    ) {
+        this.deadlineAt = deadlineAt;
+        this.content = content;
+        this.point = point;
+        this.store = store;
+    }
 }

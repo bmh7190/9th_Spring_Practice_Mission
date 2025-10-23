@@ -2,8 +2,10 @@ package umc.domain.store.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import umc.global.entity.BaseEntity;
 
 import java.time.DayOfWeek;
@@ -34,5 +36,15 @@ public class StoreBusinessHour extends BaseEntity {
 
     @Column(name = "close_time")
     private LocalTime closeTime;
+
+    @Builder
+    public StoreBusinessHour( @NonNull Store store, @NonNull DayOfWeek dayOfWeek, boolean isClosed, LocalTime openTime,
+                             LocalTime closeTime) {
+        this.store = store;
+        this.dayOfWeek = dayOfWeek;
+        this.isClosed = isClosed;
+        this.openTime = openTime;
+        this.closeTime = closeTime;
+    }
 
 }

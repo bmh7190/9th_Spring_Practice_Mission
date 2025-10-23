@@ -2,8 +2,10 @@ package umc.domain.review.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import umc.domain.member.entity.Member;
 import umc.domain.store.entity.Store;
 import umc.global.entity.BaseEntity;
@@ -39,5 +41,18 @@ public class Review extends BaseEntity {
 
     @OneToOne(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private ReviewReply reviewReply;
+
+    @Builder
+    public Review(
+            @NonNull String content,
+            @NonNull BigDecimal star,
+            @NonNull Member member,
+            @NonNull Store store
+    ) {
+        this.content = content;
+        this.star = star;
+        this.member = member;
+        this.store = store;
+    }
 
 }

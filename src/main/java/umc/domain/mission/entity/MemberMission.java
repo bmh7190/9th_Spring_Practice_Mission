@@ -2,8 +2,10 @@ package umc.domain.mission.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import umc.domain.member.entity.Member;
 import umc.global.entity.BaseEntity;
 
@@ -35,5 +37,18 @@ public class MemberMission extends BaseEntity {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-
+    @Builder
+    public MemberMission(
+            LocalDateTime acceptedAt,
+            LocalDateTime successAt,
+            @NonNull MissionStatus status,
+            @NonNull Mission mission,
+            @NonNull Member member
+    ) {
+        this.acceptedAt = (acceptedAt != null) ? acceptedAt : LocalDateTime.now(); // 기본값
+        this.successAt = successAt;
+        this.status = status;
+        this.mission = mission;
+        this.member = member;
+    }
 }

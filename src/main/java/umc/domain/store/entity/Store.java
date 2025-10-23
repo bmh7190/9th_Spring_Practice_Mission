@@ -2,8 +2,10 @@
 
     import jakarta.persistence.*;
     import lombok.AccessLevel;
+    import lombok.Builder;
     import lombok.Getter;
     import lombok.NoArgsConstructor;
+    import lombok.NonNull;
     import umc.domain.member.entity.Member;
     import umc.domain.mission.entity.Mission;
     import umc.global.entity.BaseEntity;
@@ -45,4 +47,11 @@
         @OneToMany(mappedBy = "store")
         private List<Mission> missions = new ArrayList<>();
 
+        @Builder
+        public Store( @NonNull StoreType type, @NonNull String address, @NonNull Member owner, @NonNull String name) {
+            this.type = type;
+            this.address = address;
+            this.owner = owner;
+            this.name = name;
+        }
     }

@@ -2,8 +2,10 @@ package umc.domain.member.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import umc.domain.member.entity.mapping.MemberFood;
 import umc.domain.mission.entity.MemberMission;
 import umc.global.entity.BaseEntity;
@@ -71,6 +73,33 @@ public class Member extends BaseEntity {
     public void softDelete() {
         this.memberStatus = MemberStatus.WITHDRAWN;
         this.setDeletedAt(LocalDateTime.now());
+    }
+
+    @Builder
+    public Member(
+            String name,
+            @NonNull MemberGender gender,
+            LocalDate birth,
+            @NonNull String address,
+            @NonNull String email,
+            Integer point,
+            SocialType socialType,
+            String socialUid,
+            @NonNull MemberType memberType,
+            @NonNull String phoneNumber,
+            MemberStatus memberStatus
+    ) {
+        this.name = name;
+        this.gender = gender;
+        this.birth = birth;
+        this.address = address;
+        this.email = email;
+        this.point = (point != null) ? point : 0;
+        this.socialType = socialType;
+        this.socialUid = socialUid;
+        this.memberType = memberType;
+        this.phoneNumber = phoneNumber;
+        this.memberStatus = (memberStatus != null) ? memberStatus : MemberStatus.ACTIVE;
     }
 
 }

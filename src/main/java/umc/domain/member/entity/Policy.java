@@ -2,6 +2,7 @@ package umc.domain.member.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,5 +23,12 @@ public class Policy {
     @Enumerated(EnumType.STRING)
     @Column(name = "policy_type", nullable = false)
     private PolicyType type;
+
+    @Builder
+    public Policy(String title, String content, PolicyType type) {
+        this.title = title;
+        this.content = content;
+        this.type = type;
+    }
 
 }

@@ -2,16 +2,17 @@ package umc.domain.inquiry.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import umc.domain.member.entity.Member;
 import umc.global.entity.BaseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Inquiry extends BaseEntity {
 
@@ -38,4 +39,19 @@ public class Inquiry extends BaseEntity {
 
     @OneToMany(mappedBy = "inquiry", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<InquiryPhoto> inquiryPhotos = new ArrayList<>();
+
+    @Builder
+    public Inquiry(
+            @NonNull String title,
+            @NonNull String content,
+            @NonNull InquiryType type,
+            InquiryStatus status,
+            @NonNull Member member
+    ) {
+        this.title = title;
+        this.content = content;
+        this.type = type;
+        this.status = (status != null) ? status : InquiryStatus.WAITING;
+        this.member = member;
+    }
 }
