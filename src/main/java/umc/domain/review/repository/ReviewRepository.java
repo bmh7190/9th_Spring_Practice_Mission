@@ -14,4 +14,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("delete from Review r where r.member.id = :memberId")
     int deleteAllByMemberId(@Param("memberId") Long memberId);
 
+
 }

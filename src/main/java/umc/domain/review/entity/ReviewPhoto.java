@@ -29,4 +29,8 @@ public class ReviewPhoto extends BaseEntity {
         this.review = review;
         this.photoUrl = photoUrl;
     }
+
+    void setReview(Review review) {
+        this.review = review;
+    }
 }

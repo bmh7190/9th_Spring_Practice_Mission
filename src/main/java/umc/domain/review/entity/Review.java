@@ -55,4 +55,13 @@ public class Review extends BaseEntity {
         this.store = store;
     }
 
+    public void addPhoto(ReviewPhoto photo) {
+        this.photos.add(photo);
+        photo.setReview(this);
+    }
+
+    public void addPhotos(List<ReviewPhoto> photos) {
+        photos.forEach(this::addPhoto);
+    }
+
 }
