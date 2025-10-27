@@ -7,28 +7,25 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import umc.domain.mission.dto.GetMemberMissionResponse;
-import umc.domain.mission.repository.MemberMissionRepository;
+import umc.domain.mission.dto.GetMissionResponse;
+import umc.domain.mission.repository.MissionRepository;
 
 @Service
 @RequiredArgsConstructor
 public class MissionService {
 
-    private final MemberMissionRepository memberMissionRepository;
+    private final MissionRepository missionRepository;
 
     @Transactional(readOnly = true)
-    public List<GetMemberMissionResponse> getUserMissions(
+    public List<GetMissionResponse> getAvailableMissions(
             Long userId,
-            List<String> statuses,
-            LocalDateTime cursorAcceptedAt,
+            String address,
+            LocalDateTime cursorDeadline,
             Long cursorMissionId,
             int limit
     ) {
         Pageable pageable = PageRequest.of(0, limit);
-        return memberMissionRepository.findUserMissionsPage(
-                userId, statuses, cursorAcceptedAt, cursorMissionId, pageable
-        );
+        return missionRepository.findAvailableMissions(userId, address, cursorDeadline, cursorMissionId, pageable);
     }
-
 
 }
