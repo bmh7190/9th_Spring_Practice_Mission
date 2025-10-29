@@ -24,8 +24,22 @@ public class MissionService {
             Long cursorMissionId,
             int limit
     ) {
-        Pageable pageable = PageRequest.of(0, limit);
-        return missionRepository.findAvailableMissions(userId, address, cursorDeadline, cursorMissionId, pageable);
+        return missionRepository.findAvailableMissionsNative(
+                        userId,
+                        address,
+                        cursorDeadline,
+                        cursorMissionId,
+                        limit
+                ).stream()
+                .map(row -> new GetMissionResponse(
+                        row.getMissionId(),
+                        row.getContent(),
+                        row.getPoint(),
+                        row.getDeadline(),
+                        row.getStoreName(),
+                        row.getStoreType()
+                ))
+                .toList();
     }
 
 }

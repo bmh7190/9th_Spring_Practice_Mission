@@ -10,35 +10,37 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import umc.domain.mission.dto.GetMemberMissionResponse;
 import umc.domain.mission.entity.MemberMission;
+import umc.domain.mission.repository.projection.MemberMissionProjection;
 
 @Repository
 public interface MemberMissionRepository extends JpaRepository<MemberMission, Long> {
 
-    @Query("""
-                SELECT new umc.domain.mission.dto.GetMemberMissionResponse(
-                    um.mission.id,
-                    um.status,
-                    ms.point,
-                    ms.content,
-                    st.name
-                )
-                FROM UserMission um
-                JOIN um.mission ms
-                JOIN ms.store st
-                WHERE um.user.id = :userId
-                  AND um.status IN :statuses
-                  AND (
-                        um.acceptedAt < :cursorAcceptedAt
-                     OR (um.acceptedAt = :cursorAcceptedAt AND um.mission.id < :cursorMissionId)
-                  )
-                ORDER BY um.acceptedAt DESC, um.mission.id DESC
-            """)
-    List<GetMemberMissionResponse> findUserMissionsPage(
+    @Query(value = """
+            SELECT
+                ms.id          AS missionId,
+                um.status      AS status,
+                ms.point       AS point,
+                ms.content     AS content,
+                st.name        AS storeName
+            FROM user_mission um
+            JOIN mission ms ON um.mission_id = ms.id
+            JOIN store st   ON ms.store_id   = st.id
+            WHERE um.user_id = :userId
+              AND um.status IN (:statuses)
+              AND (
+                    um.accepted_at < :cursorAcceptedAt
+                 OR (um.accepted_at = :cursorAcceptedAt AND ms.id < :cursorMissionId)
+              )
+            ORDER BY um.accepted_at DESC, ms.id DESC
+            LIMIT :limit
+            """,
+            nativeQuery = true)
+    List<MemberMissionProjection> findUserMissionsPage(
             @Param("userId") Long userId,
             @Param("statuses") List<String> statuses,
             @Param("cursorAcceptedAt") LocalDateTime cursorAcceptedAt,
             @Param("cursorMissionId") Long cursorMissionId,
-            Pageable pageable
+            @Param("limit") int limit
     );
 
 

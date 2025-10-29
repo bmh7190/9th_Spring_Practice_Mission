@@ -24,10 +24,17 @@ public class MemberMissionService {
             Long cursorMissionId,
             int limit
     ) {
-        Pageable pageable = PageRequest.of(0, limit);
         return memberMissionRepository.findUserMissionsPage(
-                userId, statuses, cursorAcceptedAt, cursorMissionId, pageable
-        );
+                        userId, statuses, cursorAcceptedAt, cursorMissionId, limit
+                ).stream()
+                .map(p -> new GetMemberMissionResponse(
+                        p.getMissionId(),
+                        p.getStatus(),
+                        p.getPoint(),
+                        p.getContent(),
+                        p.getStoreName()
+                ))
+                .toList();
     }
 
 }
