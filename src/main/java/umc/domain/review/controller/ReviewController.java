@@ -11,7 +11,7 @@ import umc.domain.review.service.ReviewQueryService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/reviews")
+@RequestMapping("/api/reviews")
 public class ReviewController {
 
     private final ReviewQueryService reviewQueryService;
