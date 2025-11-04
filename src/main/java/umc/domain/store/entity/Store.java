@@ -33,6 +33,10 @@
         @Column(nullable = false, length = 200)
         private String address;
 
+        @ManyToOne(fetch = FetchType.LAZY, optional = false)
+        @JoinColumn(name = "district_id", nullable = false)
+        private District district;
+
         @Enumerated(EnumType.STRING)
         @Column(nullable = false, length = 20)
         private StoreType type;
@@ -48,10 +52,18 @@
         private List<Mission> missions = new ArrayList<>();
 
         @Builder
-        public Store( @NonNull StoreType type, @NonNull String address, @NonNull Member owner, @NonNull String name) {
+        public Store(
+                @NonNull StoreType type,
+                @NonNull String address,
+                @NonNull Member owner,
+                @NonNull String name,
+                @NonNull District district
+        ) {
             this.type = type;
             this.address = address;
             this.owner = owner;
             this.name = name;
+            this.district = district;
         }
+
     }
