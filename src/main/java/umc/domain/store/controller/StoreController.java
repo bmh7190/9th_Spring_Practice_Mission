@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import umc.domain.store.dto.GetStoreRequest;
 import umc.domain.store.dto.GetStoreResponse;
 import umc.domain.store.service.StoreQueryService;
+import umc.global.apiPayload.ApiResponse;
+import umc.global.apiPayload.PageResponse;
+import umc.global.apiPayload.code.GeneralSuccessCode;
 
 @RestController
 @RequestMapping("/api/stores")
@@ -20,8 +23,13 @@ public class StoreController {
     private final StoreQueryService storeQueryService;
 
     @GetMapping
-    public Page<GetStoreResponse> searchStores(GetStoreRequest request,
-                                               @PageableDefault(sort = "latest") Pageable pageable) {
-        return storeQueryService.searchStores(request, pageable);
+    public ApiResponse<PageResponse<GetStoreResponse>> searchStores(
+            GetStoreRequest request,
+            @PageableDefault(sort = "latest") Pageable pageable
+    ) {
+
+        Page<GetStoreResponse> result = storeQueryService.searchStores(request, pageable);
+
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, PageResponse.of(result));
     }
 }
