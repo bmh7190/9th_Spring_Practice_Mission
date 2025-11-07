@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import umc.domain.review.entity.Review;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewRepositoryCustom {
+public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewQueryDsl {
 
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("delete from Review r where r.member.id = :memberId")

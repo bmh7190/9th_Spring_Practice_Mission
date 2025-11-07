@@ -10,7 +10,7 @@ import umc.domain.review.entity.QReview;
 import umc.domain.store.entity.QStore;
 
 @RequiredArgsConstructor
-public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
+public class ReviewQueryDslImpl implements ReviewQueryDsl {
 
     private final JPAQueryFactory queryFactory;
 
