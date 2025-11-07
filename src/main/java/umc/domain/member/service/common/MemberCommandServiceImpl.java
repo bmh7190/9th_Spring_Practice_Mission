@@ -1,12 +1,14 @@
-package umc.domain.member.service;
+package umc.domain.member.service.common;
+
+import static umc.domain.member.exception.code.MemberErrorCode.NOT_FOUND_MEMBER;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.domain.inquiry.repository.InquiryRepository;
-import umc.domain.member.dto.GetMemberResponse;
 import umc.domain.member.entity.Member;
+import umc.domain.member.exception.MemberException;
 import umc.domain.member.repository.MemberPolicyRepository;
 import umc.domain.member.repository.MemberRepository;
 import umc.domain.mission.repository.MemberMissionRepository;
@@ -16,7 +18,7 @@ import umc.domain.review.repository.ReviewRepository;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class MemberService {
+public class MemberCommandServiceImpl implements MemberCommandService {
 
     private final MemberRepository memberRepository;
     private final ReviewPhotoRepository reviewPhotoRepository;
@@ -25,23 +27,18 @@ public class MemberService {
     private final MemberPolicyRepository memberPolicyRepository;
     private final InquiryRepository inquiryRepository;
 
-    @Transactional(readOnly = true)
-    public GetMemberResponse getMember(Long memberId) {
-
-        return memberRepository.findMemberInfo(memberId);
-    }
-
+    @Override
     @Transactional
     public void updateMemberName(Long memberId, String name) {
         int updatedCount = memberRepository.updateMemberName(memberId, name);
 
         if (updatedCount == 0) {
-            throw new IllegalArgumentException("존재하지 않는 회원입니다.");
+            throw new MemberException(NOT_FOUND_MEMBER);
         }
 
     }
 
-
+    @Override
     @Transactional
     public void deleteMember(Long memberId, boolean hard) {
 
@@ -76,7 +73,7 @@ public class MemberService {
 
     private void softDeleteMember(Long memberId) {
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다."));
+                .orElseThrow(() -> new MemberException(NOT_FOUND_MEMBER));
 
         member.softDelete();
 

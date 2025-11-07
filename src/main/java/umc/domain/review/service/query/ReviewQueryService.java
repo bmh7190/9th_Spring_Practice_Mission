@@ -1,4 +1,4 @@
-package umc.domain.review.service;
+package umc.domain.review.service.query;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
