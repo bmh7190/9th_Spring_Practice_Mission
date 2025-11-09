@@ -4,7 +4,7 @@ import com.querydsl.core.types.Predicate;
 import java.util.List;
 import umc.domain.review.dto.SearchReviewResponse;
 
-public interface ReviewRepositoryCustom {
+public interface ReviewQueryDsl {
 
     List<SearchReviewResponse> searchReview(Predicate predicate);
 }
