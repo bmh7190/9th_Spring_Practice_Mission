@@ -10,6 +10,6 @@ public record GetStoreRequest(
         StoreSort sort
 ) {
     public StoreSort safeSort() {
-        return sort == null ? StoreSort.latest : sort;
+        return sort == null ? StoreSort.LATEST : sort;
     }
 }

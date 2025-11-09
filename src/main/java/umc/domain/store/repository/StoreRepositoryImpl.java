@@ -99,7 +99,7 @@ public class StoreRepositoryImpl implements StoreRepositoryCustom {
 
     private OrderSpecifier<?>[] translateSort(StoreSort sort, QStore store) {
 
-        if (sort == StoreSort.name) {
+        if (sort == StoreSort.NAME) {
             return new OrderSpecifier<?>[]{
                     nameBucket(store).asc(),                                                 // 가→A→a→기타
                     Expressions.booleanTemplate("{0} IS NULL", store.name).asc(),           // NULLS LAST
